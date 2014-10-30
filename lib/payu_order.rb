@@ -24,19 +24,19 @@ class PayuOrder
       order_url: order_url,
       notify_url: notify_url,
       continue_url: continue_url,
-      # buyer: {
-      #   email: order.email,
-      #   phone: order.bill_address.phone,
-      #   first_name: order.bill_address.firstname,
-      #   last_name: order.bill_address.lastname,
-      #   language: 'PL',
-      #   # delivery: {
-      #   #   street: order.shipping_address.address1,
-      #   #   postal_code: order.shipping_address.zipcode,
-      #   #   city: order.shipping_address.city,
-      #   #   country_code: order.bill_address.country.iso
-      #   # }
-      # },
+      buyer: {
+        email: order.email,
+        phone: order.bill_address.phone,
+        first_name: order.bill_address.firstname,
+        last_name: order.bill_address.lastname,
+        language: 'PL',
+        delivery: {
+          street: order.shipping_address.address1,
+          postal_code: order.shipping_address.zipcode,
+          city: order.shipping_address.city,
+          country_code: order.bill_address.country.iso
+        }
+      },
       products: products
     }
   end
