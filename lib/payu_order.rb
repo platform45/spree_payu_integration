@@ -20,7 +20,7 @@ class PayuOrder
       ext_order_id: order.id,
       description: description,
       # currency_code: order.currency,
-      currency_code: 'ZAR',
+      currency_code: 'PLN',
       total_amount: (order.total * 100).to_i,
       order_url: order_url,
       notify_url: notify_url,
