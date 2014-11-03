@@ -15,15 +15,15 @@ class PayuSoap
     @order_url = order_url
     @notify_url = notify_url
     @continue_url = continue_url
-    @cancel_url = request.url
+    @cancel_url = cancel_url.url
     @desc = ""
 
     @products = order.line_items.map do |li|
-      {
-        name: li.product.name,
-        unit_price: (li.price * 100).to_i,
-        quantity: li.quantity
-      }
+      # {
+      #   name: li.product.name,
+      #   unit_price: (li.price * 100).to_i,
+      #   quantity: li.quantity
+      # }
       @desc += li.product.name + " "
     end
 
