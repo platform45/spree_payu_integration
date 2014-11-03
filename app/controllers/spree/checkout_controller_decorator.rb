@@ -7,7 +7,7 @@ Spree::CheckoutController.class_eval do
 
   def check_reference_from_payu
     puts "************************"
-    puts "payment method payu #{payment_method_is_payu?}"
+
     puts "************************"
     if params.has_key?('PayUReference')
       payu_get_transaction
