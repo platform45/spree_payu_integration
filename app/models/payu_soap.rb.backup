@@ -1,0 +1,68 @@
+# class PayuSoap
+#   extend Savon::Model
+
+#   client wsdl: "https://staging.payu.co.za/service/PayUAPI?wsdl"
+#   # client wsdl: "https://secure.payu.co.za/service/PayUAPI?wsdl"  #production
+#     client = Savon.client(wsdl: "https://staging.payu.co.za/service/PayUAPI?wsdl")
+#     client.call(:set_transaction, :soap_header => { :session_id => sid })
+
+#   operations :Security
+
+
+#   soap_header: {
+#     "Security" => {
+#       "UsernameToken" => {
+#         "Username" => "100032",
+#         "Password" => "PypWWegU"
+#       }
+#     }
+#   }
+
+#   # def self.find_user(id)
+#   #   super(message: { id: id })
+#   # end
+# end
+
+require 'savon'
+require 'pp'
+require 'rubygems'
+
+client = Savon.client({
+  :wsdl => "https://staging.payu.co.za/service/PayUAPI?wsdl",
+  :pretty_print_xml => true,
+  :log_level => :debug,
+  :wsse_auth => ["100032", "PypWWegU"],
+})
+
+request_msg = {
+  :Api => "ONE_ZERO",
+  :Safekey => "{CE62CE80-0EFD-4035-87C1-8824C5C46E7F}",
+  :TransactionType => "PAYMENT",
+  :AdditionalInformation => {
+    :merchantReference => "mercRef_1350046243",
+    :cancelUrl => "http://example.com/cancel-page/",
+    :returnUrl => "http://127.0.0.1:3000/checkout/payment",
+    :supportedPaymentMethods => "CREDITCARD"
+  },
+  :Customer => {
+    :email => "john@doe.com",
+    :firstName => "John",
+    :lastName => "Doe",
+    :merchantUserId => 1350046243
+  },
+  :Basket => {
+    :amountInCents => 100,
+    :currencyCode => "ZAR",
+    :description => "Basket description comes here"
+  }
+}
+
+begin
+  set_transaction = client.call(:set_transaction) do
+    message(request_msg)
+  end
+
+rescue Savon::SOAPFault => error
+    pp error.to_hash
+
+end

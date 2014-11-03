@@ -11,12 +11,13 @@ Spree::CheckoutController.class_eval do
     payment_method = Spree::PaymentMethod.find(pm_id)
 
     if payment_method && payment_method.kind_of?(Spree::PaymentMethod::Payu)
-      params = PayuOrder.params(@order, request.remote_ip, order_url(@order), payu_notify_url, order_url(@order))
-      response = OpenPayU::Order.create(params)
 
-      case response.status['status_code']
-      when 'SUCCESS'
-        # persist_user_address
+      @payu_order = PayuSoap.new(@order, request.remote_ip, order_url(@order), payu_notify_url,
+                                  order_url(@order), request.url)
+      response ||= @payu_order.set_transaction.body
+
+      if response[:set_transaction_response][:return][:successful]
+        # reference = response[:set_transaction_response][:return][:pay_u_reference]
         payment_success(payment_method)
         redirect_to response.redirect_uri
       else
