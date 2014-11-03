@@ -54,7 +54,7 @@ class PayuSoap
         "merchantUserId" => @user.id
       },
       "Basket" => {
-        "amountInCents" => (order.total * 100).to_i,
+        "amountInCents" => (@order.total * 100).to_i,
         "currencyCode" => "ZAR",
         "description" => @desc
       }
