@@ -16,13 +16,19 @@ Spree::CheckoutController.class_eval do
                                   order_url(@order), request.url)
       response ||= @payu_order.set_transaction.body
 
-      if response[:set_transaction_response][:return][:successful]
-        # reference = response[:set_transaction_response][:return][:pay_u_reference]
-        payment_success(payment_method)
-        redirect_to response.redirect_uri
-      else
-        payu_error
-      end
+      reference = response[:set_transaction_response][:return][:pay_u_reference]
+      payu_url = response[:set_transaction_response][:@xmlns:ns2] + '?PayUReference=' + reference
+
+      redirect_to payu_url
+      # do get transaction
+
+      # if response[:set_transaction_response][:return][:successful]
+      #   #
+      #   payment_success(payment_method)
+      #   redirect_to response.redirect_uri
+      # else
+      #   payu_error
+      # end
     end
 
   rescue StandardError => e
