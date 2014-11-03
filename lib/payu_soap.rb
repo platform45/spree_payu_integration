@@ -36,7 +36,21 @@ class PayuSoap
 
   end
 
-  def request_msg
+  def set_transaction
+    reponse = @client.call(:set_transaction, message: set_transaction_request )
+  rescue Savon::SOAPFault => error
+      pp error.to_hash
+  end
+
+  def get_transaction
+     reponse = @client.call(:get_transaction, message: get_transaction_request )
+  rescue Savon::SOAPFault => error
+      pp error.to_hash
+  end
+
+  private
+
+  def set_transaction_request
     {
       "Api" => "ONE_ZERO",
       "Safekey" => "{CE62CE80-0EFD-4035-87C1-8824C5C46E7F}",
@@ -62,14 +76,14 @@ class PayuSoap
     }
   end
 
-  def set_transaction
-    reponse = @client.call(:set_transaction, message: request_msg )
-  rescue Savon::SOAPFault => error
-      pp error.to_hash
-  end
-
-  def get_transaction
-
+  def get_transaction_request
+    {
+      "Api" => "ONE_ZERO",
+      "Safekey" => "{CE62CE80-0EFD-4035-87C1-8824C5C46E7F}",
+      "AdditionalInformation" => {
+          "merchantReference" => @order.number
+      }
+    }
   end
 
 end
