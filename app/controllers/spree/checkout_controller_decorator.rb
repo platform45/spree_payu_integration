@@ -17,7 +17,8 @@ Spree::CheckoutController.class_eval do
       response ||= @payu_order.set_transaction.body
 
       reference = response[:set_transaction_response][:return][:pay_u_reference]
-      payu_url = 'https://secure.payu.co.za/rpp.do?PayUReference=' + reference
+      # payu_url = 'https://secure.payu.co.za/rpp.do?PayUReference=' + reference
+      payu_url = 'https://staging.payu.co.za/rpp.do?PayUReference=' + reference
 
       redirect_to payu_url
       # do get transaction
