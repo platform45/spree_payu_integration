@@ -5,6 +5,9 @@ Spree::CheckoutController.class_eval do
   private
 
   def pay_with_payu
+    puts "*********************************"
+    puts params
+    puts "*********************************"
     return unless params[:state] == 'payment'
 
     pm_id = params[:order][:payments_attributes].first[:payment_method_id]
