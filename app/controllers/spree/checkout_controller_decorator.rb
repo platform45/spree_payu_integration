@@ -1,14 +1,10 @@
 Spree::CheckoutController.class_eval do
 
-  #before_filter :pay_with_payu, only: :update
   before_filter :check_reference_from_payu, only: :update
 
   private
 
   def check_reference_from_payu
-    puts "************************"
-
-    puts "************************"
     if params.has_key?('PayUReference')
       payu_get_transaction
     elsif payment_method_is_payu?
@@ -36,24 +32,13 @@ Spree::CheckoutController.class_eval do
                                 order_url(@order), request.url)
 
     response = @payu_order.get_transaction.body[:get_transaction_response][:return]
-    puts "************************"
-    puts response
-    puts "************************"
 
     if response[:successful] && response[:transaction_state] == 'SUCCESSFUL'
-      flash.notice = response[:display_message]
-
-        puts "************************"
-        puts "success"
-        puts "************************"
+      flash.notice = (response[:display_message]).to_s + ' PAYMENT'
       payment_success(Spree::PaymentMethod.find_by(name: 'PayU'))
       redirect_to order_url(@order)
     else
       flash.notice = response[:display_message]
-      puts "************************"
-      puts 'fail'
-      puts "************************"
-
       payu_error
     end
   end
