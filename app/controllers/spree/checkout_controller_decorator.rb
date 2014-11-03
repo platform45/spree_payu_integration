@@ -17,16 +17,15 @@ Spree::CheckoutController.class_eval do
 
   def payu_set_transaction
     return unless params[:state] == 'payment'
-      @payu_order = PayuSoap.new(@order, request.remote_ip, order_url(@order), payu_notify_url,
-                                  order_url(@order), request.url)
-      response = @payu_order.set_transaction.body
+    @payu_order = PayuSoap.new(@order, request.remote_ip, order_url(@order), payu_notify_url,
+                                order_url(@order), request.url)
+    response = @payu_order.set_transaction.body
 
-      set_payu_reference(response[:set_transaction_response][:return][:pay_u_reference])
-      # payu_url = 'https://secure.payu.co.za/rpp.do?PayUReference=' + payu_reference
-      payu_url = 'https://staging.payu.co.za/rpp.do?PayUReference=' + payu_reference
+    set_payu_reference(response[:set_transaction_response][:return][:pay_u_reference])
+    # payu_url = 'https://secure.payu.co.za/rpp.do?PayUReference=' + payu_reference
+    payu_url = 'https://staging.payu.co.za/rpp.do?PayUReference=' + payu_reference
 
-      redirect_to payu_url
-    end
+    redirect_to payu_url
   end
 
   def payu_get_transaction
