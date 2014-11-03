@@ -3,10 +3,10 @@ class PayuSoap
 
   #   # client wsdl: "https://secure.payu.co.za/service/PayUAPI?wsdl"  #production
   include Rails.application.routes.url_helpers
-  require 'savon'
-  require 'pp'
-  require 'rubygems'
-  require 'pry'
+  # require 'savon'
+  # require 'pp'
+  # require 'rubygems'
+  # require 'pry'
 
   def initialize(order, ip, order_url, notify_url, continue_url, cancel_url)
     @order = order
