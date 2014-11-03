@@ -46,7 +46,7 @@ class PayuSoap
           "notificationUrl" => @notify_url,
           "cancelUrl" => @cancel_url,
           # "returnUrl" => @continue_url,
-          "returnUrl" => '/checkout/update/payment',
+          "returnUrl" => @cancel_url,
           "supportedPaymentMethods" => "CREDITCARD"
       },
       "Customer" => {
