@@ -1,5 +1,5 @@
 class PayuSoap
-  #  extend Savon::Model
+  extend Savon::Model
 
   #   # client wsdl: "https://secure.payu.co.za/service/PayUAPI?wsdl"  #production
   include Rails.application.routes.url_helpers
@@ -9,6 +9,7 @@ class PayuSoap
   # require 'pry'
 
   def initialize(order, ip, order_url, notify_url, continue_url, cancel_url)
+    super
     @order = order
     @user = @order.user
     @ip = ip
