@@ -1,9 +1,9 @@
 class PayuSoap
-  extend Savon::Model
+  # extend Savon::Model
 
   #   # client wsdl: "https://secure.payu.co.za/service/PayUAPI?wsdl"  #production
   include Rails.application.routes.url_helpers
-  # require 'savon'
+  require 'savon'
   # require 'pp'
   # require 'rubygems'
   # require 'pry'
