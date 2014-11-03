@@ -9,7 +9,6 @@ class PayuSoap
   # require 'pry'
 
   def initialize(order, ip, order_url, notify_url, continue_url, cancel_url)
-    super
     @order = order
     @user = @order.user
     @ip = ip
