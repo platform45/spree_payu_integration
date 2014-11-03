@@ -15,7 +15,7 @@ class PayuSoap
     @order_url = order_url
     @notify_url = notify_url
     @continue_url = continue_url
-    @cancel_url = cancel_url.url
+    @cancel_url = cancel_url
     @desc = ""
 
     @products = order.line_items.map do |li|
