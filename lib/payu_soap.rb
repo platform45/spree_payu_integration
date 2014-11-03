@@ -27,7 +27,7 @@ class PayuSoap
       @desc += li.product.name + " "
     end
 
-    client = Savon.client({
+    @client = Savon.client({
       :wsdl => "https://staging.payu.co.za/service/PayUAPI?wsdl",
       :pretty_print_xml => true,
       :log_level => :debug,
@@ -62,7 +62,7 @@ class PayuSoap
   end
 
   def set_transaction
-    reponse = client.call(:set_transaction, message: request_msg )
+    reponse = @client.call(:set_transaction, message: request_msg )
   rescue Savon::SOAPFault => error
       pp error.to_hash
   end
