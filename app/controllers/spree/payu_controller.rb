@@ -3,7 +3,9 @@ module Spree
     protect_from_forgery except: [:notify, :continue]
 
     def notify
-      binding.pry
+      puts "************************************"
+      puts params
+      puts "************************************"
       response = OpenPayU::Order.retrieve(params[:order][:orderId])
       order_info = response.parsed_data['orders']['orders'].first
       order = Spree::Order.find(order_info['extOrderId'])
