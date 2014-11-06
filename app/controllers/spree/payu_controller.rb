@@ -4,6 +4,7 @@ module Spree
 
     def notify
       puts "************************************"
+      puts "params"
       puts params
       puts "************************************"
       # response = OpenPayU::Order.retrieve(params[:order][:orderId])
