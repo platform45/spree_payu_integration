@@ -35,11 +35,13 @@ Spree::CheckoutController.class_eval do
 
     if response[:successful] && response[:transaction_state] == 'SUCCESSFUL'
       flash.notice = (response[:display_message]).to_s + ' PAYMENT'
-      payment_success(Spree::PaymentMethod.find_by(name: 'PayU'))
+      payment = create_pending_payment(Spree::PaymentMethod.find_by(name: 'PayU'))
+      payment.complete!
       redirect_to order_url(@order)
     else
       flash.notice = response[:display_message]
-      payu_error
+      payment = create_pending_payment(Spree::PaymentMethod.find_by(name: 'PayU'))
+      payment.failure!
     end
   end
 
@@ -57,7 +59,7 @@ Spree::CheckoutController.class_eval do
     @reference
   end
 
-  def payment_success(payment_method)
+  def create_pending_payment(payment_method)
     payment = @order.payments.build(
       payment_method_id: payment_method.id,
       amount: @order.total,
@@ -75,6 +77,7 @@ Spree::CheckoutController.class_eval do
     end
 
     payment.pend!
+    payment
   end
 
   def payu_error(e = nil)
