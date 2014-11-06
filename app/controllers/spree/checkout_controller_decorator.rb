@@ -74,6 +74,7 @@ Spree::CheckoutController.class_eval do
       redirect_to checkout_state_path(@order.state) and return
     end
 
+    payment.pend!
     payment.complete!
   end
 
@@ -89,6 +90,7 @@ Spree::CheckoutController.class_eval do
       redirect_to checkout_state_path(@order.state) and return
     end
 
+    payment.pend!
     payment.failure!
   end
 
