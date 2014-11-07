@@ -28,10 +28,10 @@ class PayuSoap
     end
 
     @client = Savon.client({
-      :wsdl => "https://staging.payu.co.za/service/PayUAPI?wsdl",
+      :wsdl => ENV['PAYU_WSDL'],
       :pretty_print_xml => true,
       :log_level => :debug,
-      :wsse_auth => ["100032", "PypWWegU"],
+      :wsse_auth => [ENV['PAYU_SOAP_USERNAME'], ENV['PAYU_SOAP_PASSWORD']],
     })
 
   end
@@ -53,7 +53,7 @@ class PayuSoap
   def set_transaction_request
     {
       "Api" => "ONE_ZERO",
-      "Safekey" => "{CE62CE80-0EFD-4035-87C1-8824C5C46E7F}",
+      "Safekey" => ENV['PAYU_SAFEKEY'],
       "TransactionType" => "PAYMENT",
       "AdditionalInformation" => {
           "merchantReference" => @order.number,
@@ -79,7 +79,7 @@ class PayuSoap
   def get_transaction_request
     {
       "Api" => "ONE_ZERO",
-      "Safekey" => "{CE62CE80-0EFD-4035-87C1-8824C5C46E7F}",
+      "Safekey" => ENV['PAYU_SAFEKEY'],
       "AdditionalInformation" => {
           "merchantReference" => @order.number
       }

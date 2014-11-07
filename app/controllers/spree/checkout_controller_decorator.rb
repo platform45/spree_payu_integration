@@ -22,7 +22,7 @@ Spree::CheckoutController.class_eval do
 
     set_payu_reference(response[:set_transaction_response][:return][:pay_u_reference])
     # payu_url = 'https://secure.payu.co.za/rpp.do?PayUReference=' + payu_reference
-    payu_url = 'https://staging.payu.co.za/rpp.do?PayUReference=' + payu_reference
+    payu_url = ENV['PAYU_REDIRECT_URL'] + '?PayUReference=' + payu_reference
 
     redirect_to payu_url
   end
