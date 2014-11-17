@@ -30,7 +30,7 @@ Spree::CheckoutController.class_eval do
   def payu_get_transaction
     @payu_order = PayuSoap.new(@order, request.remote_ip, order_url(@order), payu_notify_url,
                                 order_url(@order), request.url)
-    binding.pry
+
     response = @payu_order.get_transaction.body[:get_transaction_response][:return]
 
     if response[:successful] && response[:transaction_state] == 'SUCCESSFUL'
