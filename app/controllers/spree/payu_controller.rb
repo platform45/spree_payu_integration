@@ -22,6 +22,7 @@ module Spree
       # end
 
       # render json: OpenPayU::Order.build_notify_response(response.req_id)
+      render json: 'Notification received', status: 200
     end
   end
 end
