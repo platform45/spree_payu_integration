@@ -35,7 +35,7 @@ Spree::CheckoutController.class_eval do
 
     if response[:successful] && response[:transaction_state] == 'SUCCESSFUL'
       flash.notice = (response[:display_message]).to_s + ' PAYMENT'
-      create_payment(Spree::PaymentMethod.find_by(name: 'PayU'))
+      create_payment(Spree::PaymentMethod.find_by(type: Spree::PaymentMethod::Payu))
       redirect_to order_url(@order)
     else
       flash.notice = response[:display_message]
